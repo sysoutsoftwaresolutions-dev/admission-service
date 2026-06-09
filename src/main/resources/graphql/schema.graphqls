@@ -1,0 +1,25 @@
+directive @key(fields: String!) on OBJECT | INTERFACE
+directive @external on FIELD_DEFINITION
+directive @extends on OBJECT | INTERFACE
+
+type Student @key(fields: "id") {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  grade: String!
+  section: String!
+  rollNumber: String!
+}
+
+type Service {
+  sdl: String!
+}
+
+type Query {
+  getStudentById(id: ID!): Student
+  _service: Service!
+  _entities(representations: [_Any!]!): [_Entity]!
+}
+
+scalar _Any
+union _Entity = Student
