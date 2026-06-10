@@ -1,0 +1,27 @@
+{
+  "id": "admission-workflow",
+  "module": "admission-service",
+  "startStep": "generateStudentId",
+  "roles": ["ADMIN", "STAFF"],
+  "steps": [
+    {
+      "id": "generateStudentId",
+      "module": "admission-service",
+      "resource": "generateStudentIdExecutor",
+      "nextStep": "notifyAdmissionComplete",
+      "retry": {
+        "maxAttempts": 3,
+        "backoffPeriodMs": 1000
+      }
+    },
+    {
+      "id": "notifyAdmissionComplete",
+      "module": "admission-service",
+      "resource": "notifyAdmissionCompleteExecutor",
+      "retry": {
+        "maxAttempts": 3,
+        "backoffPeriodMs": 1000
+      }
+    }
+  ]
+}
